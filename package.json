@@ -1,0 +1,23 @@
+{
+  "name": "respite",
+  "version": "1.0.0",
+  "description": "respite aircraft and flight routing algorithm",
+  "main": "server.js",
+  "scripts": {
+    "test": "NODE_ENV=development node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skylerspaeth/respite.git"
+  },
+  "author": "Skyler Spaeth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skylerspaeth/respite/issues"
+  },
+  "homepage": "https://github.com/skylerspaeth/respite#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.18"
+  }
+}
