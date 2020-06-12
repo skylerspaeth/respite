@@ -2,9 +2,9 @@
   "name": "respite",
   "version": "1.0.0",
   "description": "respite aircraft and flight routing algorithm",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=development node server.js"
+    "test": "NODE_ENV=development node index.js"
   },
   "repository": {
     "type": "git",
