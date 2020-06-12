@@ -7,3 +7,4 @@ In a read-only configuration, this project could work off a directory of JSON fi
 
 To begin, populate your database accordingly:
 ![Screenshot](docs/mongoShell.png) <!-- .element height="50%" width="50%" -->
+Each of the entries in the `db.operations` collection should be a regularly scheduled flight that is operated by the carrier.
