@@ -1,0 +1,25 @@
+import mongoose, { Schema, Document } from 'mongoose';
+
+export interface AirOp extends Document {
+	fcode: string;
+	fnum: string;
+	origin: string;
+	destination: string;
+	aircraft: string;
+	depTime: string;
+	arrTime: string;
+	classes: [string];
+}
+
+const OperationSchema: Schema = new Schema({
+	fcode: { type: String, required: true },
+	fnum: { type: String, required: true },
+	origin: { type: String, required: true },
+	destination: { type: String, required: true },
+	aircraft: { type: String, required: true },
+	depTime: { type: String, required: true },
+	arrTime: { type: String, required: true },
+	classes: { type: [String], required: true }
+});
+
+export default mongoose.model<AirOp>('Operation', OperationSchema);

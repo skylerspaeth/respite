@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-module.exports = {
+export default {
 	getItinerariesByICAO: (options) => {
 		// ... return flight objects that make a connected route
 	}
