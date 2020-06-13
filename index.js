@@ -22,3 +22,8 @@ mongoose.connect(dbUrl, { useUnifiedTopology: true, useNewUrlParser: true }, (er
 	if (!err) { console.log(`connected to mongoDB @ ${dbUrl}`) }
 	else { console.log('DB error:' + err) }
 });
+
+// Operation.findOne({ fcode: 'BAW' }, (err, doc) => { console.log(err ? err : doc) });
+Operation.updateOne({ fnum: "191" }, { aircraft: 'Boeing 777-200' }, (err) => {
+	console.log(err ? err : 'successfully changed aircraft type');
+})

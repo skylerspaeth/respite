@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 module.exports.operationSchema = mongoose.Schema({
 	fcode: String,
-	fnum: Number,
+	fnum: String,
 	origin: String,
 	destination: String,
 	aircraft: String,
