@@ -42,7 +42,7 @@ interface Operation {
 
 for(let i: number = 0; i < count; i++) {
 	(async() => {
-		let html: string = await request(`https://www.random.org/clock-times/?num=${count * 2}&earliest=00%3A00&latest=23%3A59&interval=5&format=plain&rnd=new`,
+		let html: string = await request(`https://www.random.org/clock-times/?num=${4}&earliest=00%3A00&latest=23%3A59&interval=5&format=plain&rnd=new`,
 			(err, res, body) => {
 				if (err) { console.log('API error:' + err) }
 				else { return body }
@@ -79,7 +79,9 @@ for(let i: number = 0; i < count; i++) {
 				classes: from.classes
 			});
 		}
-		await Operation.create(outgoingFlight);
-		await Operation.create(generateIncoming(outgoingFlight));
+		function callback(err, doc) { console.log(err ? err : `doc added: ${doc}`) }
+		await Operation.create(outgoingFlight, callback);
+		await Operation.create(generateIncoming(outgoingFlight), callback);
 	})();
 }
+
