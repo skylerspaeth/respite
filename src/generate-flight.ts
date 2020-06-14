@@ -1,3 +1,4 @@
+export {};
 const
 	// Invocation arguments
 	count: number = parseInt(process.argv[2]) || 1,

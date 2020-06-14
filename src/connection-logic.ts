@@ -1,6 +1,7 @@
+export {};
 const
-// Database
-mongoose = require('mongoose'),
+	// Database
+	mongoose = require('mongoose'),
 	dbName: string = "respiteDB",
 	dbUrl: string = `mongodb://localhost:27017/${dbName}`,
 	{ operationSchema } = require('../models/operation.model.js'),
