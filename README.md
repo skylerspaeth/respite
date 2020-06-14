@@ -2,7 +2,8 @@
 ## About
 Respite is a flight routing algorithm designed for application to single airlines or otherwise larger, aggregate travel sites. I am undertaking this project to teach myself more about algorithms and time/space complexity.
 
-## Database Seeding
+## Setup
+### Database Seeding
 In a read-only configuration, this project could work off a directory of JSON files... but that makes things significantly harder to scale. Respite instead uses mongoDB for database functionality and Mongoose for ODM. An identical structure must be present in your database for the code to be ran as expected.
 
 To begin, setup a mongoDB database called `respiteDB`:
