@@ -5,7 +5,8 @@ const
 	dbName: string = "respiteDB",
 	dbUrl: string = `mongodb://localhost:27017/${dbName}`,
 	{ operationSchema } = require('../models/operation.model.js'),
-	Operation = mongoose.model("Operation", operationSchema)
+	Operation = mongoose.model("Operation", operationSchema),
+	chalk = require('chalk')
 ;
 
 (async() => {
@@ -19,14 +20,14 @@ const
 	}
 	async function routeHasNonstop(origin, destination) {
 		let docs = await Operation.find({ origin: origin, destination: destination }, (err, docs) => docs );
-		//console.log(docs.length);
 		if (docs.length != 0) {
 			return docs;
 		}
 		else { return false; }
 	}
 	//getItinerariesByICAO('yeet');
-	if (await routeHasNonstop('KAUS','EGLL')) { console.log('found result') } else { console.log('no result') }
+	const nonstops = await routeHasNonstop('KAUS','KORD');
+	if (nonstops) { console.log(chalk.green(nonstops.length > 1 ? 'Nonstops exist: ' : 'Nonstop exists: '), nonstops) } else { console.log(chalk.yellow('No nonstops exists.')) }
 	//console.log(await routeHasNonstop('KAUS', 'EGLL'));
 	//await Operation.find({ origin: "KAUS", destination: "EGLL" }, (err, doc) => { console.log(doc) });
 	process.exit();

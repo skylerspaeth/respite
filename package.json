@@ -19,6 +19,7 @@
   "dependencies": {
     "@types/mongoose": "^5.7.24",
     "@types/node": "^14.0.13",
+    "chalk": "^4.1.0",
     "express": "^4.17.1",
     "mongoose": "^5.9.18",
     "request": "^2.88.2",
