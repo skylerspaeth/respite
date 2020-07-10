@@ -12,7 +12,7 @@ const
 (async() => {
 	await mongoose.connect(dbUrl, { useUnifiedTopology: true, useNewUrlParser: true }, (err) => {
 		if (!err) { console.log(`connected to mongoDB @ ${dbUrl}`) }
-		else { console.log('DB error:' + err) }
+		else { console.log('DB error: ' + err) }
 	});
 	async function getItinerariesByICAO(options) {
 		// ... return flight objects that make a connected route
@@ -28,7 +28,5 @@ const
 	//getItinerariesByICAO('yeet');
 	const nonstops = await routeHasNonstop('KAUS','KORD');
 	if (nonstops) { console.log(chalk.green(nonstops.length > 1 ? 'Nonstops exist: ' : 'Nonstop exists: '), nonstops) } else { console.log(chalk.yellow('No nonstops exists.')) }
-	//console.log(await routeHasNonstop('KAUS', 'EGLL'));
-	//await Operation.find({ origin: "KAUS", destination: "EGLL" }, (err, doc) => { console.log(doc) });
 	process.exit();
 })();
