@@ -17,13 +17,13 @@
   },
   "homepage": "https://github.com/skylerspaeth/respite#readme",
   "dependencies": {
-    "@types/mongoose": "^5.7.24",
-    "@types/node": "^14.0.13",
+    "@types/mongoose": "^5.7.35",
+    "@types/node": "^14.0.27",
     "chalk": "^4.1.0",
     "express": "^4.17.1",
-    "mongoose": "^5.9.18",
+    "mongoose": "^5.9.27",
     "prompt-sync": "^4.2.0",
     "request": "^2.88.2",
-    "request-promise": "^4.2.5"
+    "request-promise": "^4.2.6"
   }
 }

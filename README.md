@@ -25,4 +25,4 @@ The easiest way to add flights to the database would be to use `src/generate-fli
 These docs will come shortly.
 
 ## Project scope
-This project is intended to find the most effective flight itineraries with regard to time, transfers, and comfort (class). As the purpose of this algorithm is strictly educational, pricing and more advanced filters are currently out of the scope, but may come later.
+This project is intended to find the most effective flight itineraries with regard to time, transfers, and comfort (class). As the purpose of this algorithm is strictly educational, pricing and more advanced filters are currently out of its scope, but may come later.
