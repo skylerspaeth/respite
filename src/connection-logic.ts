@@ -14,7 +14,7 @@ const
 		if (!err) { console.log(`connected to mongoDB @ ${dbUrl}`) }
 		else { console.log('DB error: ' + err) }
 	});
-	async function getItinerariesByICAO(options) {
+	async function getDestsByICAO(options) {
 		// ... return flight objects that make a connected route
 
 		let docs = await Operation.find({ origin: options.origin }, (err, docs) => docs ).lean();
@@ -24,19 +24,24 @@ const
 	}
 
 	async function generateConnections(origin, destination) {
-		let servicedFromOrigin = await Operation.find({ origin: origin }, (err, docs) => docs );
-		if (servicedFromOrigin.length != 0) {
-			for (let i=0; i<servicedFromOrigin.length; i++) {
-				let sroFlights = await getItinerariesByICAO({ origin: servicedFromOrigin[i]["destination"] });
+		let originServices = await Operation.find({ origin: origin }, (err, docs) => docs );
+		if (originServices.length != 0) {
+			for (let i=0; i<originServices.length; i++) {
+				let sroFlights = await getDestsByICAO({ origin: originServices[i]["destination"] });
+				sroFlights.forEach((e) => {
+					console.log(`${e.origin} -> ${e.destination}`);
+					// note to self: when recursing through airports, ignore origin airport
+				});
+				//console.log("sro:" + sroFlights.origin + "to " + sroFlights.destination));
 				let connectingFlights = sroFlights.filter((e) => {
 					return e.destination == destination;
 				});
-				console.log(connectingFlights.length);
-				// let sroFlights = await Operation.find({ origin: servicedFromOrigin[i]["destination"] }, (err, docs) => docs);
+				// console.log(connectingFlights.length);
+				// let sroFlights = await Operation.find({ origin: originServices[i]["destination"] }, (err, docs) => docs);
 				console.dir(connectingFlights);
 			}
 			/*
-			servicedFromOrigin.forEach(async(e) => {
+			originServices.forEach(async(e) => {
 				let sroFlights = await Operation.find({ origin: e.destination }, (err, docs) => docs);
 				console.dir(sroFlights);
 				// get airports serviced by this destination
