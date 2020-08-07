@@ -15,11 +15,10 @@ const
 		else { console.log('DB error: ' + err) }
 	});
 	async function getDestsByICAO(options) {
-		// ... return flight objects that make a connected route
-
 		let docs = await Operation.find({ origin: options.origin }, (err, docs) => docs ).lean();
 		if (docs.length != 0) {
 			return docs;
+			// return destination docs serviced by options.origin
 		} else { return false; }
 	}
 
@@ -28,28 +27,25 @@ const
 		if (originServices.length != 0) {
 			for (let i=0; i<originServices.length; i++) {
 				let sroFlights = await getDestsByICAO({ origin: originServices[i]["destination"] });
+				/* // commented out to disable verbose output
 				console.log(`${originServices[i]["destination"]} has the following routes:`);
 				sroFlights.forEach((e) => {
 					console.log(`${e.origin} -> ${e.destination}`);
-					// note to self: when recursing through airports, ignore origin airport
 				});
-				//console.log("sro:" + sroFlights.origin + "to " + sroFlights.destination));
+				*/
+				// note to self: when recursing through airports, ignore origin airport
 				let connectingFlights = sroFlights.filter((e) => {
-					return e.destination == destination;
+					if (e.destination == destination) {
+						console.log(`${chalk.green('Connection itinerary found:')} ${originServices[i]["origin"]} -> ${originServices[i]["destination"]}; ${e.origin} -> ${e.destination}:`);
+						console.log(originServices[i]);
+						return true;
+					}
 				});
-				// console.log(connectingFlights.length);
 				// let sroFlights = await Operation.find({ origin: originServices[i]["destination"] }, (err, docs) => docs);
-				console.log(connectingFlights.length != 0 ? connectingFlights : `This airport does not contribute a connecting flight to selected destination.`);
+				if (connectingFlights.length != 0) console.log(connectingFlights);
 			}
-			/*
-			originServices.forEach(async(e) => {
-				let sroFlights = await Operation.find({ origin: e.destination }, (err, docs) => docs);
-				console.dir(sroFlights);
-				// get airports serviced by this destination
-			});
-			 */
-				return true;
-			} else { return false; }
+			return true;
+		} else { return false; }
 	}
 
 	async function routeHasNonstop(origin, destination) {
