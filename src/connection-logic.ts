@@ -28,6 +28,7 @@ const
 		if (originServices.length != 0) {
 			for (let i=0; i<originServices.length; i++) {
 				let sroFlights = await getDestsByICAO({ origin: originServices[i]["destination"] });
+				console.log(`${originServices[i]["destination"]} has the following routes:`);
 				sroFlights.forEach((e) => {
 					console.log(`${e.origin} -> ${e.destination}`);
 					// note to self: when recursing through airports, ignore origin airport
@@ -38,7 +39,7 @@ const
 				});
 				// console.log(connectingFlights.length);
 				// let sroFlights = await Operation.find({ origin: originServices[i]["destination"] }, (err, docs) => docs);
-				console.dir(connectingFlights);
+				console.log(connectingFlights.length != 0 ? connectingFlights : `This airport does not contribute a connecting flight to selected destination.`);
 			}
 			/*
 			originServices.forEach(async(e) => {
