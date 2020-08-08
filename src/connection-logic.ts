@@ -42,7 +42,7 @@ const
 				});
 				// let sroFlights = await Operation.find({ origin: originServices[i]["destination"] }, (err, docs) => docs);
 				if (connectingFlights.length != 0) connectingFlights.forEach((c) => {
-					console.log(`${chalk.green('Connection itinerary found:')} ${originServices[i]["origin"]} -> ${originServices[i]["destination"]}; e.origin, e.destination go here`);
+					console.log(`${chalk.green('Connection itinerary found:')} ${originServices[i]["origin"]} -> ${originServices[i]["destination"]}; ${c.origin} -> ${c.destination}`);
 					console.log(originServices[i]);
 					console.log(c);
 				});
