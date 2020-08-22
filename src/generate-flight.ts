@@ -69,7 +69,7 @@ for(let i: number = 0; i < count; i++) {
 			classes: ["A", "B", "C"]
 		}
 		function generateIncoming(from) {
-			return new Object({
+			return new Operation({
 				fcode: from.fcode,
 				fnum: from.fnum += 1,
 				origin: from.destination,
@@ -81,8 +81,17 @@ for(let i: number = 0; i < count; i++) {
 			});
 		}
 		function callback(err, doc) { console.log(err ? err : `doc added: ${doc}`) }
+		let incomingFlight: Operation = generateIncoming(outgoingFlight);
+
+		// ensure there are no pre-existing flights matching the same fcode and fnum values
+		let outgoingDups = await Operation.find({ fcode: outgoingFlight.fcode, fnum: outgoingFlight.fnum });
+		let incomingDups = await Operation.find({ fcode: incomingFlight.fcode, fnum: incomingFlight.fnum });
+
+		if (outgoingDups.length != 0) return;
+		if (incomingDups.length != 0) return;
+		
+		// if there is not any duplicates, add the docs to db
 		await Operation.create(outgoingFlight, callback);
-		await Operation.create(generateIncoming(outgoingFlight), callback);
+		await Operation.create(incomingFlight, callback);
 	})();
 }
-

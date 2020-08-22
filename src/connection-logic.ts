@@ -2,17 +2,26 @@ export {};
 interface Route {
 	origin: string;
 	destination: string;
+	passclass?: string;
 }
-
 const
 	mongoose = require('mongoose'),
 	dbName: string = "respiteDB",
 	dbUrl: string = `mongodb://localhost:27017/${dbName}`,
 	{ operationSchema } = require('../models/operation.model.js'),
 	Operation = mongoose.model("Operation", operationSchema),
+	prompt = require('prompt-sync')(),
 	chalk = require('chalk'),
 	routing: Route = { origin: process.argv[2], destination: process.argv[3] }
 ;
+
+if (!routing.origin || !routing.destination) {
+	routing.origin = prompt(chalk.cyan('Starting airport [KAUS]: ')).toUpperCase() || "KAUS";
+	routing.destination = prompt(chalk.cyan('Destination airport [KSFO]: ')).toUpperCase() || "KSFO";
+	// routing.passclass = prompt(chalk.cyan('Passenger class [Y, b, p, j]: ')).toUpperCase() || "Y";
+	routing.passclass = 'any';
+	console.log(chalk.magenta(`From ${routing.origin}; to ${routing.destination}; in ${routing.passclass} class`));
+}
 
 (async() => {
 	await mongoose.connect(dbUrl, { useUnifiedTopology: true, useNewUrlParser: true }, (err) => {
@@ -68,8 +77,7 @@ const
 	if (nonstops) { console.log(chalk.green(nonstops.length > 1 ? 'Nonstops exist: ' : 'Nonstop exists: '), nonstops) } else { console.log(chalk.yellow('No nonstops exists.')) }
 
 	const connections = await generateConnections(routing.origin, routing.destination);
-	// if (connections) { console.log(connections) }
-	console.log(connections);
+	if (connections) { console.log(connections) }
 
 	process.exit();
 })();
