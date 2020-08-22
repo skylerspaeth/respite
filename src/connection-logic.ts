@@ -1,11 +1,17 @@
 export {};
+interface Route {
+	origin: string;
+	destination: string;
+}
+
 const
 	mongoose = require('mongoose'),
 	dbName: string = "respiteDB",
 	dbUrl: string = `mongodb://localhost:27017/${dbName}`,
 	{ operationSchema } = require('../models/operation.model.js'),
 	Operation = mongoose.model("Operation", operationSchema),
-	chalk = require('chalk')
+	chalk = require('chalk'),
+	routing: Route = { origin: process.argv[2], destination: process.argv[3] }
 ;
 
 (async() => {
@@ -26,7 +32,7 @@ const
 		if (originServices.length != 0) {
 			for (let i=0; i<originServices.length; i++) {
 				let sroFlights = await getDestsByICAO({ origin: originServices[i]["destination"] });
-				/* // commented out to disable verbose output
+				/* // commented out to disable excessively verbose output
 				console.log(`${originServices[i]["destination"]} has the following routes:`);
 				sroFlights.forEach((e) => {
 					console.log(`${e.origin} -> ${e.destination}`);
@@ -58,11 +64,10 @@ const
 		}
 		else { return false; }
 	}
-	//getItinerariesByICAO('yeet');
-	const nonstops = await routeHasNonstop('KAUS','KDFW');
+	const nonstops = await routeHasNonstop(routing.origin, routing.destination);
 	if (nonstops) { console.log(chalk.green(nonstops.length > 1 ? 'Nonstops exist: ' : 'Nonstop exists: '), nonstops) } else { console.log(chalk.yellow('No nonstops exists.')) }
 
-	const connections = await generateConnections('KAUS', 'KDFW');
+	const connections = await generateConnections(routing.origin, routing.destination);
 	// if (connections) { console.log(connections) }
 	console.log(connections);
 

@@ -4,7 +4,9 @@
   "description": "respite aircraft and flight routing algorithm",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=development node index.js"
+    "test": "NODE_ENV=development node index.js",
+    "build": "tsc",
+    "start": "npm run build -- -w"
   },
   "repository": {
     "type": "git",
