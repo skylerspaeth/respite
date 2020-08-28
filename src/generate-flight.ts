@@ -90,7 +90,7 @@ for(let i: number = 0; i < count; i++) {
 		if (outgoingDups.length != 0) return;
 		if (incomingDups.length != 0) return;
 		
-		// if there is not any duplicates, add the docs to db
+		// if there are not any duplicates, add the docs to db
 		await Operation.create(outgoingFlight, callback);
 		await Operation.create(incomingFlight, callback);
 	})();

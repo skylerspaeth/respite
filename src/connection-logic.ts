@@ -39,6 +39,7 @@ if (!routing.origin || !routing.destination) {
 	async function generateConnections(origin, destination) {
 		let originServices = await Operation.find({ origin: origin }, (err, docs) => docs );
 		if (originServices.length != 0) {
+			let connected: boolean = false;
 			for (let i=0; i<originServices.length; i++) {
 				let sroFlights = await getDestsByICAO({ origin: originServices[i]["destination"] });
 				/* // commented out to disable excessively verbose output
@@ -46,23 +47,25 @@ if (!routing.origin || !routing.destination) {
 				sroFlights.forEach((e) => {
 					console.log(`${e.origin} -> ${e.destination}`);
 				});
-				 */
+				*/
 				// note to self: when recursing through airports, ignore origin airport
 				let connectingFlights = sroFlights.filter((e) => {
 					if (e.destination == destination) {
 						//console.log(`${chalk.green('Connection itinerary found:')} ${originServices[i]["origin"]} -> ${originServices[i]["destination"]}; ${e.origin} -> ${e.destination}:`);
 						//console.log(originServices[i]);
 						return true;
-					}
+					} 
 				});
-				// let sroFlights = await Operation.find({ origin: originServices[i]["destination"] }, (err, docs) => docs);
-				if (connectingFlights.length != 0) connectingFlights.forEach((c) => {
-					console.log(`${chalk.green('Connection itinerary found:')} ${originServices[i]["origin"]} -> ${originServices[i]["destination"]}; ${c.origin} -> ${c.destination}`);
-					console.log(originServices[i]);
-					console.log(c);
-				});
+				if (connectingFlights.length != 0) {
+					connected = true;
+					connectingFlights.forEach((c) => {
+						console.log(`${chalk.green('Connection itinerary found:')} ${originServices[i]["origin"]} -> ${originServices[i]["destination"]}; ${c.origin} -> ${c.destination}`);
+						console.log(originServices[i]);
+						console.log(c);
+					});
+				}
 			}
-			return true;
+			return connected;
 		} else { return false; }
 	}
 
@@ -74,10 +77,10 @@ if (!routing.origin || !routing.destination) {
 		else { return false; }
 	}
 	const nonstops = await routeHasNonstop(routing.origin, routing.destination);
-	if (nonstops) { console.log(chalk.green(nonstops.length > 1 ? 'Nonstops exist: ' : 'Nonstop exists: '), nonstops) } else { console.log(chalk.yellow('No nonstops exists.')) }
+	if (nonstops) { console.log(chalk.green(nonstops.length > 1 ? 'Nonstops exist: ' : 'Nonstop exists: '), nonstops) } else { console.log(chalk.yellow('No nonstops exist.')) }
 
 	const connections = await generateConnections(routing.origin, routing.destination);
-	if (connections) { console.log(connections) }
+	if (!connections) { console.log(chalk.yellow('No connecting flights exist.')) }
 
 	process.exit();
 })();
