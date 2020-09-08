@@ -17,7 +17,7 @@ const
 const
 	airlines = ["BAW", "AAL", "SWA", "DAL", "AFR", "QFA", "VIR", "SQC"],
 	airports = ["KAUS", "KLAX", "KFSO", "KSEA", "KORD", "KDFW", "KIAH", "KJFK", "EGLL", "LFPG", "LTFM"],
-	aircraft = ["Boeing 777-200", "Boeing 747-400", "Boeing 787-900", "Boeing 737-8 MAX", "Airbus 321neo", "Airbus 388", "Airbus 350xwb"]
+	aircraft = ["Boeing 777-200", "Boeing 747-400", "Boeing 787-900", "Boeing 737 MAX 8", "Airbus 321neo", "Airbus 388", "Airbus 350xwb", "Airbus 333"]
 ;
 
 mongoose.connect(dbUrl, { useUnifiedTopology: true, useNewUrlParser: true }, (err) => {
