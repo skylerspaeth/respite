@@ -22,10 +22,9 @@ schemas.forEach((e) => {
 });
 
 // Connect to mongoDB
-await mongoose.connect(dbUrl, { useUnifiedTopology: true, useNewUrlParser: true }, (err) => {
-if (!err) { console.log(`connected to mongoDB @ ${dbUrl}`) }
-	else { console.log('DB error:' + err) }
-});
+await mongoose.connect(dbUrl, { useUnifiedTopology: true, useNewUrlParser: true }).then(() => {
+	console.log(`connected to mongoDB @ ${dbUrl}`);
+}).catch(console.error);
 
 const origin = prompt(chalk.cyan('Starting airport [KAUS]: ')).toUpperCase() || "KAUS";
 const destination = prompt(chalk.cyan('Destination airport [KSFO]: ')).toUpperCase() || "KSFO";
