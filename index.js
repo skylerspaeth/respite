@@ -20,16 +20,17 @@ schemas.forEach((e) => {
 	global[schemaName] = require(`./models/${e.toLowerCase()}.model.js`)[schemaName];
 	global[e] = mongoose.model(e, global[schemaName]);
 });
-
+(async () => {
 // Connect to mongoDB
-await mongoose.connect(dbUrl, { useUnifiedTopology: true, useNewUrlParser: true }).then(() => {
-	console.log(`connected to mongoDB @ ${dbUrl}`);
-}).catch(console.error);
+	await mongoose.connect(dbUrl, { useUnifiedTopology: true, useNewUrlParser: true }).then(() => {
+		console.log(`connected to mongoDB @ ${dbUrl}`);
+	}).catch(console.error);
 
-const origin = prompt(chalk.cyan('Starting airport [KAUS]: ')).toUpperCase() || "KAUS";
-const destination = prompt(chalk.cyan('Destination airport [KSFO]: ')).toUpperCase() || "KSFO";
-const passclass = prompt(chalk.cyan('Passenger class [Y, b, p, j]: ')).toUpperCase() || "Y";
-console.log(chalk.magenta(`From ${origin}; to ${destination}; in ${passclass} class`));
+	const origin = prompt(chalk.cyan('Starting airport [KAUS]: ')).toUpperCase() || "KAUS";
+	const destination = prompt(chalk.cyan('Destination airport [KSFO]: ')).toUpperCase() || "KSFO";
+	const passclass = prompt(chalk.cyan('Passenger class [Y, b, p, j]: ')).toUpperCase() || "Y";
+	console.log(chalk.magenta(`From ${origin}; to ${destination}; in ${passclass} class`));
+})();
 
 /* Databse test interaction stuff
 // Operation.findOne({ fcode: 'BAW' }, (err, doc) => { console.log(err ? err : doc) });
