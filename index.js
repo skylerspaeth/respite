@@ -20,8 +20,9 @@ schemas.forEach((e) => {
 	global[schemaName] = require(`./models/${e.toLowerCase()}.model.js`)[schemaName];
 	global[e] = mongoose.model(e, global[schemaName]);
 });
+
 (async () => {
-// Connect to mongoDB
+	// Connect to mongoDB
 	await mongoose.connect(dbUrl, { useUnifiedTopology: true, useNewUrlParser: true }).then(() => {
 		console.log(`connected to mongoDB @ ${dbUrl}`);
 	}).catch(console.error);
